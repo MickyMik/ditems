@@ -250,7 +250,7 @@ const Experience = () => {
                 >
                   {/* Timeline dot */}
                   <div
-                    className="absolute left-1 md:left-3 top-7 w-6 h-6 rounded-full bg-white border-2 border-primary shadow-glow flex items-center justify-center"
+                    className="absolute left-1 md:left-3 top-7 w-6 h-6 rounded-full bg-background border-2 border-primary shadow-glow flex items-center justify-center"
                     style={{
                       transform: timelineVisible ? "scale(1)" : "scale(0)",
                       transition: `transform 0.3s ease-out ${index * 0.12 + 0.1}s`,
@@ -263,7 +263,7 @@ const Experience = () => {
                     <CardContent className="p-6 md:p-8">
                       <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                         <div>
-                          <h3 className="text-lg md:text-xl font-bold text-navy mb-1 group-hover:text-primary transition-colors duration-200">
+                          <h3 className="text-lg md:text-xl font-bold text-foreground mb-1 group-hover:text-primary transition-colors duration-200">
                             {exp.title}
                           </h3>
                           <h4 className="text-base text-primary font-semibold mb-2">{exp.company}</h4>
@@ -283,7 +283,7 @@ const Experience = () => {
                       <p className="text-muted-foreground text-sm mb-5 leading-relaxed">{exp.description}</p>
 
                       <div className="mb-5">
-                        <h5 className="font-semibold text-navy text-sm mb-3">{t("experience.achievements")}</h5>
+                        <h5 className="font-semibold text-foreground text-sm mb-3">{t("experience.achievements")}</h5>
                         <ul className="space-y-1.5">
                           {exp.achievements.map((achievement, idx) => (
                             <li key={idx} className="flex items-start space-x-2">
@@ -295,7 +295,7 @@ const Experience = () => {
                       </div>
 
                       <div>
-                        <h5 className="font-semibold text-navy text-sm mb-3">{t("experience.technologies")}</h5>
+                        <h5 className="font-semibold text-foreground text-sm mb-3">{t("experience.technologies")}</h5>
                         <div className="flex flex-wrap gap-2">
                           {exp.technologies.map((tech, idx) => (
                             <Badge

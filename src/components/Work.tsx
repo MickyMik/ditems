@@ -92,11 +92,11 @@ const Work = () => {
                 </div>
 
                 <CardContent className="p-8">
-                  <h3 className="text-2xl font-bold text-navy mb-4">{project.title}</h3>
+                  <h3 className="text-2xl font-bold text-foreground mb-4">{project.title}</h3>
                   <p className="text-muted-foreground mb-6">{project.description}</p>
 
                   <div className="mb-6">
-                    <h4 className="font-semibold text-navy mb-3">{t("work.keyFeatures")}</h4>
+                    <h4 className="font-semibold text-foreground mb-3">{t("work.keyFeatures")}</h4>
                     <ul className="space-y-2">
                       {project.features.map((feature, idx) => (
                         <li key={idx} className="flex items-start space-x-2">
@@ -108,10 +108,10 @@ const Work = () => {
                   </div>
 
                   <div className="mb-6">
-                    <h4 className="font-semibold text-navy mb-3">{t("work.technologies")}</h4>
+                    <h4 className="font-semibold text-foreground mb-3">{t("work.technologies")}</h4>
                     <div className="flex flex-wrap gap-2">
                       {project.technologies.map((tech, idx) => (
-                        <Badge key={idx} variant="secondary" className="bg-blue-light text-navy text-xs">
+                        <Badge key={idx} variant="secondary" className="bg-blue-light text-foreground dark:bg-primary/20 dark:text-primary text-xs">
                           {tech}
                         </Badge>
                       ))}

@@ -388,6 +388,42 @@ Les variables `VITE_EMAILJS_*` doivent être ajoutées en tant que **GitHub Secr
 
 ---
 
+## 2026-07-07 — Dark/light mode système + correction couleurs
+
+### Contexte
+Le site n'avait qu'un thème clair fixe. Les variables `.dark` existaient (shadcn par défaut) mais n'étaient jamais activées. Plusieurs composants utilisaient des couleurs hardcodées (`text-navy`, `bg-white`) non compatibles avec un thème sombre.
+
+### Changements
+
+**Détection système (index.html)**
+- Script synchrone inline avant le `<body>` : lit `window.matchMedia('(prefers-color-scheme: dark)')`, applique la classe `.dark` sur `<html>` immédiatement (zéro flash), et écoute les changements en temps réel
+
+**Variables dark (src/index.css)**
+- Remplacé les valeurs shadcn génériques par un thème sombre "navy" cohérent avec la palette bleue du site :
+  - Background : `230 40% 9%` (dark navy profond)
+  - Card : `230 35% 17%` (légèrement plus clair, distinct du fond)
+  - Foreground : `210 25% 93%` (blanc cassé)
+  - Primary : `207 80% 60%` (bleu légèrement plus lumineux pour le fond sombre)
+  - Border : `230 30% 28%` (visible sur fond sombre)
+  - Gradients, shadows et custom tokens (`--navy`, `--blue-light`) aussi mis à jour
+
+**Correction des couleurs hardcodées**
+- `src/components/SectionTitle.tsx` : `text-navy` → `text-foreground`
+- `src/components/About.tsx` : `text-navy` (×4) → `text-foreground` ; `bg-white` → `bg-card`
+- `src/components/Experience.tsx` : `text-navy` (×3) → `text-foreground` ; `bg-white` (dot timeline) → `bg-background`
+- `src/components/Certifications.tsx` : `text-navy` (×2) → `text-foreground` ; badges → `dark:bg-primary/20 dark:text-primary`
+- `src/components/Work.tsx` : `text-navy` (×3) → `text-foreground` ; badges → `dark:bg-primary/20 dark:text-primary`
+
+### Résultat
+- Mode clair : identique visuellement (en light, `foreground` = même valeur que l'ancien `navy`)
+- Mode sombre : thème navy profond, texte blanc, accents bleus vifs, cartes distinctes du fond
+- Changement instantané sans rechargement si l'utilisateur change son OS entre dark et light
+
+### Build
+`✓ tsc --noEmit` — 0 erreur TypeScript
+
+---
+
 ## 2026-07-07 — Traduction complète FR des réalisations et descriptions (Experience)
 
 ### Contexte

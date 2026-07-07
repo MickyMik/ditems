@@ -8,10 +8,12 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import FloatingDownload from "@/components/FloatingDownload";
 import ScrollProgress from "@/components/ScrollProgress";
+import CursorGlow from "@/components/CursorGlow";
 
 const Index = () => {
   return (
     <div className="min-h-screen">
+      <CursorGlow />
       <ScrollProgress />
       <Header />
       <Hero />
