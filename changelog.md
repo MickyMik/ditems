@@ -449,6 +449,58 @@ Le contenu bascule intégralement FR ↔ EN avec le toggle de langue, sans recha
 
 ---
 
+## 2026-07-07 — Animations Apple-style (Hero, SectionTitle, About, CursorGlow)
+
+### Contexte
+Le site était rendu dynamique via des transitions au scroll (IntersectionObserver), mais les animations manquaient de fluidité et de caractère. Objectif : atteindre le niveau qualitatif des pages produit Apple — reveal mot par mot, parallaxe souris, scrollytelling, cursor glow ambiant.
+
+### Changements
+
+**Nouveaux hooks**
+- **Créé** : `src/hooks/use-mouse.tsx` — expose la position normalisée (0–1) de la souris via `mousemove` + `passive: true`
+
+**Nouveaux composants**
+- **Créé** : `src/components/CursorGlow.tsx` — orbe ambient 700px suivant le curseur avec lerp 0.05 via `requestAnimationFrame`. Évite React state pour ne pas bloquer le rendu. `will-change: left, top` pour GPU compositing. Masqué sous `md:`.
+
+**CSS global (src/index.css)**
+- **Ajouté** : keyframe `reveal-up` — fondu + slide depuis Y+40px (éléments héro)
+- **Ajouté** : keyframe `clip-up` — slide depuis Y+110% sans opacité (masque texte, technique Apple)
+- **Ajouté** : keyframe `scale-in` — scale 0.92 → 1 + slide (cartes)
+- **Ajouté** : keyframe `glow-pulse` — pulsation radiale pour le glow ambiant
+
+**Hero.tsx — refonte complète**
+- Dot grid : `radial-gradient(circle, rgba(255,255,255,0.4) 1px, transparent 1px)` overlay 15% opacity
+- Mouse parallax : 4 blobs déplacés via `translate((mx-0.5)*fx, (my-0.5)*fy)` + transition `0.8s spring`
+- 3 cercles décoratifs en rotation lente (28s / 20s reverse / 40s) via `animate-[spin_Xs_linear_infinite]`
+- Title reveal mot par mot : outer `overflow-hidden` + inner `clip-up` staggeré 0.13s/mot
+- Stagger spring sur tous les éléments : greeting → title → subtitle → description → CTA → stats → socials → scroll indicator
+- Easing `cubic-bezier(0.16, 1, 0.3, 1)` partout (courbe spring Apple exacte)
+
+**SectionTitle.tsx — refonte complète**
+- Reveal mot par mot identique au Hero (mask `overflow-hidden` + `translateY(110% → 0)`)
+- Stagger 0.1s/mot, transition `0.75s spring`
+- Underline : `width 0% → 100%` en `0.8s spring` avec délai post-dernier-mot
+- Subtitle : fade + slide cascadé après l'underline
+
+**About.tsx — scrollytelling intro**
+- Scroll listener passive sur le paragraphe intro : calcule fraction visible dans viewport
+- Chaque mot bascule `muted-foreground → foreground` au défilement (transition `0.25s ease`)
+- Cards strengths et skills card : spring scale 0.96–0.97 → 1 à l'entrée viewport
+
+**Index.tsx**
+- **Ajouté** : `<CursorGlow />` comme premier enfant de la page
+
+### Résultat
+- Hero : séquence de reveal ~2s, parallaxe temps réel, effet cinématique
+- Sections : titres mot par mot comme apple.com
+- About : texte intro se révèle pendant la lecture
+- Curseur : orbe ambiant rend le site vivant
+
+### Build
+`✓ tsc --noEmit` — 0 erreur TypeScript
+
+---
+
 ## Format pour les entrées futures
 
 ```markdown
