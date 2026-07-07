@@ -97,7 +97,7 @@ const Header = () => {
               className="text-xs font-bold text-foreground/70 hover:text-primary transition-colors border border-border hover:border-primary rounded-md px-2.5 py-1.5"
               aria-label={`Switch to ${otherLang}`}
             >
-              {currentLang}
+              {otherLang}
             </button>
             <a href={cvUrl} download target="_blank" rel="noopener noreferrer">
               <Button variant="download" size="sm" className="hidden md:flex">
@@ -139,6 +139,7 @@ const Header = () => {
             <button
               onClick={toggleLanguage}
               className="text-base font-semibold text-foreground hover:text-primary transition-colors border border-border rounded-md px-4 py-2"
+              aria-label={`Switch to ${otherLang}`}
             >
               {otherLang}
             </button>

@@ -337,6 +337,82 @@ Le bloc CTA en bas de la section Work ("Interested in Collaboration? ... Start a
 
 ---
 
+## 2026-07-07 — Améliorations UX, corrections et footer
+
+### Contexte
+Audit complet du site via browser automation. Identification et correction de 9 points d'amélioration (bugs, layout, contenu, technique).
+
+### Changements
+
+**Bugs corrigés**
+- **Modifié** : `src/hooks/use-counter.tsx` — latch du trigger : le compteur animé ne redémarre plus de 0 quand l'utilisateur revient dans la section Hero. Ajout d'un état `latched` qui reste `true` une fois déclenché.
+- **Modifié** : `src/components/Header.tsx` — bouton de langue affiche désormais la **langue cible** (ex: "FR" quand on est en anglais) et non la langue courante. C'est la convention attendue et c'était la raison principale pour laquelle les utilisateurs ne trouvaient pas le bouton pour passer en français.
+- **Modifié** : `src/components/FloatingDownload.tsx` — utilise maintenant `i18n.language` (via `useTranslation`) au lieu de `navigator.language`. Le PDF téléchargé correspond désormais à la langue sélectionnée dans l'UI, et non à la langue du navigateur. Bouton "Resume/CV" traduit via `t("nav.resume")`.
+
+**Layout**
+- **Modifié** : `src/components/Work.tsx` — grille passée de `lg:grid-cols-2` à `md:grid-cols-2 lg:grid-cols-3`. Les 3 projets s'affichent maintenant en ligne complète sur desktop, sans carte orpheline.
+- **Créé** : `src/components/Footer.tsx` — nouveau footer avec copyright, liens sociaux (LinkedIn, GitHub, Email) et mention de la stack technique. Traduit FR/EN.
+- **Modifié** : `src/pages/Index.tsx` — ajout de `<Footer />` après `<Contact />`.
+
+**Contenu**
+- **Modifié** : `src/components/Hero.tsx` — ajout du nom "Michael Metinhoue" au-dessus du titre principal (clé i18n `hero.greeting` + `hero.name`).
+- **Modifié** : `src/components/About.tsx` — affichage du paragraphe `about.intro` (existait dans les fichiers de traduction mais n'était jamais rendu).
+- **Modifié** : `src/components/Experience.tsx` — correction de 2 fautes : "CAMRMIGNAC" → "CARMIGNAC", "EQUIPEMENT" → "EQUIPMENT".
+
+**Technique**
+- **Modifié** : `src/components/Contact.tsx` — regex de validation Zod pour `name` et `subject` migré vers des patterns Unicode (`\p{L}`, `\p{N}`, flag `u`). Les noms français avec accents (François, Élodie...) sont maintenant acceptés. Credentials EmailJS externalisés vers variables d'environnement (`import.meta.env.VITE_EMAILJS_*`).
+- **Créé** : `.env` — fichier de configuration local avec les credentials EmailJS (gitignored).
+- **Modifié** : `.gitignore` — ajout de `.env` (le fichier `.env` seul n'était pas couvert par la règle `*.local`).
+
+**i18n**
+- **Modifié** : `src/i18n/locales/en.json` — ajout des clés `hero.greeting`, `hero.name`, `footer.builtWith`.
+- **Modifié** : `src/i18n/locales/fr.json` — ajout des clés `hero.greeting` ("Bonjour, je suis"), `hero.name`, `footer.builtWith`.
+
+### Note déploiement
+Les variables `VITE_EMAILJS_*` doivent être ajoutées en tant que **GitHub Secrets** dans le repo pour que le build GitHub Actions les injecte. Sans cela, le formulaire de contact ne fonctionnera pas en production après le prochain déploiement.
+
+### Build
+`✓ tsc --noEmit` — 0 erreur TypeScript
+
+### Impact sur la dette technique
+- Résolu : compteur Hero qui redémarrait au scroll
+- Résolu : bouton langue trompeur (affichait la langue courante au lieu de la cible)
+- Résolu : FloatingDownload ignorait le toggle de langue
+- Résolu : grille Work asymétrique (3 cartes dans 2 colonnes)
+- Résolu : absence de footer
+- Résolu : nom absent du Hero
+- Résolu : paragraphe `about.intro` inutilisé
+- Résolu : fautes de frappe dans Experience (CARMIGNAC, EQUIPMENT)
+- Résolu : formulaire de contact rejetait les noms/sujets avec accents français
+- Résolu : credentials EmailJS hardcodés dans le source
+
+---
+
+## 2026-07-07 — Traduction complète FR des réalisations et descriptions (Experience)
+
+### Contexte
+Les descriptions et réalisations (bullet points) de la section Experience étaient uniquement en anglais. En mode français, le label "Réalisations clés :" était bien traduit mais le contenu dessous restait en anglais.
+
+### Changements
+- **Modifié** : `src/components/Experience.tsx` — ajout d'un flag `isFr = i18n.language.startsWith("fr")` et d'une version FR inline pour chaque champ `description` et `achievements` des 7 expériences (57 réalisations + 7 descriptions traduites). La sélection se fait à la volée : `isFr ? [...FR] : [...EN]`.
+
+### Résultat
+Le contenu bascule intégralement FR ↔ EN avec le toggle de langue, sans rechargement de page.
+
+### Build
+`✓ tsc --noEmit` — 0 erreur TypeScript
+
+---
+
+## 2026-07-07 — "Analytics Expert" → "Analytics Engineer"
+
+### Changements
+- **Modifié** : `src/i18n/locales/en.json` — `hero.subtitle` : "& Analytics Engineer"
+- **Modifié** : `src/i18n/locales/fr.json` — `hero.subtitle` : "& Ingénieur Analytique"
+- **Modifié** : `index.html` — `<title>` et `og:title` mis à jour (2 occurrences)
+
+---
+
 ## Format pour les entrées futures
 
 ```markdown

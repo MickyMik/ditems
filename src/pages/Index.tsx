@@ -5,6 +5,7 @@ import Experience from "@/components/Experience";
 import Certifications from "@/components/Certifications";
 import Work from "@/components/Work";
 import Contact from "@/components/Contact";
+import Footer from "@/components/Footer";
 import FloatingDownload from "@/components/FloatingDownload";
 import ScrollProgress from "@/components/ScrollProgress";
 
@@ -19,6 +20,7 @@ const Index = () => {
       <Certifications />
       <Work />
       <Contact />
+      <Footer />
       <FloatingDownload />
     </div>
   );

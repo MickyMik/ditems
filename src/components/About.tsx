@@ -31,6 +31,10 @@ const About = () => {
         <div className="max-w-6xl mx-auto">
           <SectionTitle text={t("about.title")} />
 
+          <p className="text-muted-foreground leading-relaxed max-w-3xl mx-auto text-center mb-12 text-base md:text-lg">
+            {t("about.intro")}
+          </p>
+
           <div className="grid md:grid-cols-2 gap-12 items-start mb-16">
             <div className="space-y-5">
               <h3 className="text-2xl font-bold text-navy">{t("about.journeyTitle")}</h3>

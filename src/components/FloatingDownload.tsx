@@ -1,17 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 const BASE_URL = "https://raw.githubusercontent.com/MickyMik/ditems-data-craft/main/resume/";
 
-const getCvUrl = () => {
-  const isFrench = navigator.language.startsWith("fr");
-  return isFrench
-    ? `${BASE_URL}CV_METINHOUE_FR.pdf`
-    : `${BASE_URL}CV_METINHOUE_EN.pdf`;
-};
-
 const FloatingDownload = () => {
+  const { i18n, t } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -23,12 +18,14 @@ const FloatingDownload = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const isFrench = i18n.language.startsWith("fr");
+  const cvUrl = isFrench ? `${BASE_URL}CV_METINHOUE_FR.pdf` : `${BASE_URL}CV_METINHOUE_EN.pdf`;
+  const cvFilename = isFrench ? "CV_METINHOUE_FR.pdf" : "CV_METINHOUE_EN.pdf";
+
   const handleDownload = () => {
     const link = document.createElement("a");
-    link.href = getCvUrl();
-    link.download = navigator.language.startsWith("fr")
-      ? "CV_METINHOUE_FR.pdf"
-      : "CV_METINHOUE_EN.pdf";
+    link.href = cvUrl;
+    link.download = cvFilename;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -45,7 +42,7 @@ const FloatingDownload = () => {
         className="rounded-full shadow-glow hover:shadow-glow animate-float"
       >
         <Download className="w-5 h-5" />
-        <span className="hidden sm:inline ml-2">Resume</span>
+        <span className="hidden sm:inline ml-2">{t("nav.resume")}</span>
       </Button>
     </div>
   );

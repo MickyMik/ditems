@@ -37,6 +37,9 @@ const Hero = () => {
 
       <div className="container mx-auto px-4 py-20 text-center relative z-10">
         <div className="max-w-4xl mx-auto animate-slide-up">
+          <p className="text-base md:text-lg text-blue-light/70 mb-3 tracking-widest uppercase">
+            {t("hero.greeting")} <span className="text-white font-semibold normal-case">{t("hero.name")}</span>
+          </p>
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
             {t("hero.title")}
             <span className="block text-blue-light min-h-[1.2em]">

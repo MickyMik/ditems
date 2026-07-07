@@ -14,22 +14,22 @@ import emailjs from "@emailjs/browser";
 import { sanitizeInput, checkRateLimit, setRateLimit } from "@/utils/security";
 import SectionTitle from "@/components/SectionTitle";
 
-const SERVICE_ID = "service_t6so8r5";
-const TEMPLATE_ID = "template_meqf9bp";
-const PUBLIC_KEY = "IobH6oMwMiIETnEVh";
+const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID as string;
+const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string;
+const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY as string;
 
 const contactFormSchema = z.object({
   name: z.string()
     .min(2, "Name must be at least 2 characters")
     .max(50, "Name must not exceed 50 characters")
-    .regex(/^[a-zA-Z\s-']+$/, "Name contains invalid characters"),
+    .regex(/^[\p{L}\s\-']+$/u, "Name contains invalid characters"),
   email: z.string()
     .email("Please enter a valid email address")
     .max(100, "Email must not exceed 100 characters"),
   subject: z.string()
     .min(3, "Subject must be at least 3 characters")
     .max(100, "Subject must not exceed 100 characters")
-    .regex(/^[a-zA-Z0-9\s-,.!?]+$/, "Subject contains invalid characters"),
+    .regex(/^[\p{L}\p{N}\s\-,.!?]+$/u, "Subject contains invalid characters"),
   message: z.string()
     .min(10, "Message must be at least 10 characters")
     .max(1000, "Message must not exceed 1000 characters")

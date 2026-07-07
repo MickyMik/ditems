@@ -62,7 +62,7 @@ const Work = () => {
         <div className="max-w-6xl mx-auto">
           <SectionTitle text={t("work.title")} subtitle={t("work.subtitle")} />
 
-          <div ref={gridRef} className="grid lg:grid-cols-2 gap-8">
+          <div ref={gridRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project, index) => (
               <TiltCard
                 key={index}

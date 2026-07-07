@@ -8,8 +8,10 @@
     "resume": "Resume"
   },
   "hero": {
+    "greeting": "Hi, I'm",
+    "name": "Michael Metinhoue",
     "title": "Data Engineer",
-    "subtitle": "& Analytics Expert",
+    "subtitle": "& Analytics Engineer",
     "description": "Transforming raw data into actionable insights with cutting-edge technologies and scalable solutions.",
     "exploreWork": "Explore My Work",
     "getInTouch": "Get In Touch"
@@ -53,6 +55,9 @@
     "ctaTitle": "Interested in Collaboration?",
     "ctaText": "I'm always excited to work on challenging data engineering projects. Let's discuss how we can build something amazing together.",
     "ctaButton": "Start a Conversation"
+  },
+  "footer": {
+    "builtWith": "Built with React · Vite · shadcn/ui"
   },
   "contact": {
     "title": "Let's Connect",

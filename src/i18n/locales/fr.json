@@ -8,8 +8,10 @@
     "resume": "CV"
   },
   "hero": {
+    "greeting": "Bonjour, je suis",
+    "name": "Michael Metinhoue",
     "title": "Data Engineer",
-    "subtitle": "& Expert Analytique",
+    "subtitle": "& Ingénieur Analytique",
     "description": "Transformer la donnée brute en insights actionnables grâce à des technologies de pointe et des solutions scalables.",
     "exploreWork": "Découvrir mon travail",
     "getInTouch": "Me contacter"
@@ -53,6 +55,9 @@
     "ctaTitle": "Intéressé par une collaboration ?",
     "ctaText": "Je suis toujours enthousiaste à l'idée de travailler sur des projets data ambitieux. Discutons de ce que nous pouvons construire ensemble.",
     "ctaButton": "Démarrer une conversation"
+  },
+  "footer": {
+    "builtWith": "Construit avec React · Vite · shadcn/ui"
   },
   "contact": {
     "title": "Travaillons ensemble",
