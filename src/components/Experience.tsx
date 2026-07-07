@@ -6,17 +6,29 @@ import useIntersection from "@/hooks/use-intersection";
 import SectionTitle from "@/components/SectionTitle";
 
 const Experience = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [timelineRef, timelineVisible] = useIntersection({ threshold: 0.05 });
+  const isFr = i18n.language.startsWith("fr");
 
   const experiences = [
     {
       title: "AZURE DATA ENGINEER",
-      company: "CAMRMIGNAC — ASSET MANAGEMENT",
+      company: "CARMIGNAC — ASSET MANAGEMENT",
       location: "Paris, France",
       period: "10/2025 - Present",
-      description: "Migration of several ssis packages to Azure Data Factory. Building solution to answer business projects and needs.",
-      achievements: [
+      description: isFr
+        ? "Migration de plusieurs packages SSIS vers Azure Data Factory. Construction de solutions pour répondre aux projets et besoins métier."
+        : "Migration of several ssis packages to Azure Data Factory. Building solutions to answer business projects and needs.",
+      achievements: isFr ? [
+        "Gestion de projet – Collecte, analyse et traduction des exigences métier en solutions data adaptées",
+        "Développement Python de pipelines de récupération de données depuis des APIs",
+        "Mise en place de flux SQL de test basés sur les règles métier",
+        "Conception et implémentation de modèles de données",
+        "Migration et optimisation SSIS vers ADF",
+        "Pipeline ADF pour la collecte de données via APIs (Azure APIM) & Azure Function",
+        "Maintenance évolutive des solutions SSIS & optimisation",
+        "Control-M pour l'orchestration des jobs",
+      ] : [
         "Project management – Gathering, analysis, and translation of business requirements into suitable data solutions",
         "Python development of data retrieval pipelines from APIs",
         "Setup of Test SQL flows based on business rules",
@@ -30,11 +42,22 @@ const Experience = () => {
     },
     {
       title: "JUNIOR CLOUD DATA ARCHITECT – AZURE DATA ENGINEER",
-      company: "HAGER GROUP — ELECTRICAL EQUIPEMENT MANUFACTURER",
+      company: "HAGER GROUP — ELECTRICAL EQUIPMENT MANUFACTURER",
       location: "Paris, France",
       period: "03/2025 - 10/2025",
-      description: "Collaborated with Cloud Data Architect to build a 360° customer view through ADF pipelines, Power BI reports, and Azure AI Search.",
-      achievements: [
+      description: isFr
+        ? "Collaboration avec le Cloud Data Architect pour construire une vue client à 360° via des pipelines ADF, des rapports Power BI et Azure AI Search."
+        : "Collaborated with Cloud Data Architect to build a 360° customer view through ADF pipelines, Power BI reports, and Azure AI Search.",
+      achievements: isFr ? [
+        "Conception et implémentation de modèles de données selon l'architecture Medallion",
+        "Développement de pipelines Fabric (Dataverse & Eloqua & Dynamics)",
+        "Construction de rapports Power BI / Fabric - DAX / M - Direct Lake",
+        "Réconciliation de données pour une vue client à 360° (Azure AI Search & Azure Foundry)",
+        "Optimisation des processus pour une meilleure efficacité",
+        "Rédaction de spécifications techniques",
+        "Création de pipelines de release avec Azure DevOps",
+        "Utilisation de LLM pour la réconciliation de profils (all-MiniLM-L6-v2)",
+      ] : [
         "Designed and implemented data models using the medallion architecture",
         "Developed Fabric pipelines (Dataverse & Eloqua & Dynamics)",
         "Built Power BI / Fabric reports - Dax / M - Direct Lake",
@@ -51,8 +74,34 @@ const Experience = () => {
       company: "VIDAL GROUP — MEDICAL PUBLISHER & HEALTHCARE DATA",
       location: "Issy-les-moulineaux, France",
       period: "06/2019 - 03/2025",
-      description: "Led technical team and managed end-to-end data solutions, including ADF pipeline development, SSIS automation, Power BI reporting, hybrid integration runtime configuration, database migrations, and SQL Server upgrades.",
-      achievements: [
+      description: isFr
+        ? "Encadrement de l'équipe technique et gestion de solutions data de bout en bout : développement de pipelines ADF, automatisation SSIS, reporting Power BI, configuration des Integration Runtimes hybrides, migrations de bases de données et mises à niveau SQL Server."
+        : "Led technical team and managed end-to-end data solutions, including ADF pipeline development, SSIS automation, Power BI reporting, hybrid integration runtime configuration, database migrations, and SQL Server upgrades.",
+      achievements: isFr ? [
+        "Management d'équipe technique, favorisant la collaboration et augmentant la productivité globale de 20%.",
+        "Animation des cérémonies Scrum pour assurer la coordination de l'équipe et l'avancement des livrables.",
+        "Supervision du cycle de production, garantissant 100% de livraisons dans les délais impartis.",
+        "Planification du développement et des releases sur les différents environnements (CI/CD), améliorant la traçabilité.",
+        "Développement de pipelines ADF optimisés, réduisant les temps d'intégration de données de 20%.",
+        "Configuration des IRs (Integration Runtimes) pour le traitement en architecture hybride, réduisant les coûts opérationnels.",
+        "Migration de bases de données on-premises vers Azure SQL Database (ADMA).",
+        "Migration de SQL Server 2005 vers SQL Server 2019 Cluster Always On Failover avec liste de routage, assurant la haute disponibilité.",
+        "Modélisation de data warehouse en schéma en étoile ou architecture Medallion.",
+        "Migration de SQL Server 2008 R2 vers SQL Server 2016, améliorant la stabilité système et réduisant les incidents.",
+        "Développement de rapports Power BI interactifs au format PBIR avec versioning sur Azure DevOps.",
+        "Installation et configuration de tous les serveurs SQL / MySQL / SQLite pour le département data.",
+        "Standardisation des installations SQL Server, assurant des configurations serveur uniformes.",
+        "Intégration de tests unitaires (tSQLt) sur tous les environnements de production, garantissant la cohérence des règles métier.",
+        "Conception, automatisation, optimisation et ordonnancement des flux SSIS et SSRS.",
+        "Conception et maintenance de cubes tabulaires sur SSAS et Azure Analysis Services.",
+        "Optimisation des mesures DAX, réduisant les temps de calcul de 20% pour les analyses complexes.",
+        "Implémentation de RLS/OLS/CLS sur les cubes tabulaires.",
+        "Configuration et monitoring des jobs / deadlocks.",
+        "Développement de pipelines Databricks (DLT).",
+        "Développement de notebooks et scripts SQL dans Azure Synapse.",
+        "Optimisation des processus et serveurs SQL, augmentant les performances globales des bases de données de 35%.",
+        "Standardisation des livraisons de bases de données containerisées (Docker) sur Nexus, augmentant la fiabilité des déploiements.",
+      ] : [
         "Technical team management, fostering collaboration and increasing overall productivity by 20%.",
         "Facilitation of Scrum ceremonies to ensure team coordination and smooth progress of deliverables.",
         "Supervision of the production cycle, guaranteeing 100% on-time deliveries within the allotted deadlines.",
@@ -84,8 +133,16 @@ const Experience = () => {
       company: "COVAGE - TELECOM OPERATOR",
       location: "Sèvre, France",
       period: "10/2018 – 06/2019",
-      description: "Built data pipelines, created reports, managed ETL workflows, and optimized servers.",
-      achievements: [
+      description: isFr
+        ? "Construction de pipelines de données, création de rapports, gestion des workflows ETL et optimisation des serveurs."
+        : "Built data pipelines, created reports, managed ETL workflows, and optimized servers.",
+      achievements: isFr ? [
+        "Développement de pipelines ADF optimisés, réduisant les temps de traitement des données de 20%.",
+        "Développement de rapports Power BI cloud en DAX / M, supportant la prise de décision stratégique.",
+        "Conception, automatisation, optimisation et ordonnancement des flux SSIS et SSAS.",
+        "Optimisation des configurations SQL Server, réduisant les temps de requêtes complexes de 40%.",
+        "Rédaction de spécifications techniques.",
+      ] : [
         "Development of optimized ADF pipelines, reducing data processing times by 20%.",
         "Development of cloud Power BI reports in DAX / M, supporting strategic decision-making.",
         "Design, automation, optimization, and scheduling of SSIS and SSAS flows.",
@@ -99,8 +156,15 @@ const Experience = () => {
       company: "PHILIP MORRIS FRANCE - TOBACCO INDUSTRY",
       location: "La Defense, France",
       period: "06/2018 – 10/2018",
-      description: "Migration of 100 SSIS packages from SSIS 2008 R2 to SSIS 2016 and schedule using Control-M.",
-      achievements: [
+      description: isFr
+        ? "Migration de 100 packages SSIS de SSIS 2008 R2 vers SSIS 2016 et ordonnancement via Control-M."
+        : "Migration of 100 SSIS packages from SSIS 2008 R2 to SSIS 2016 and schedule using Control-M.",
+      achievements: isFr ? [
+        "Migration de 100 packages SSIS de SSIS 2008 R2 vers SSIS 2016 avec Attunity",
+        "Implémentation d'une stratégie de déploiement des packages sur plusieurs environnements",
+        "Optimisation des processus SQL Server pour de meilleures performances",
+        "Ordonnancement des jobs via Control-M",
+      ] : [
         "Migrated 100 SSIS packages from SSIS 2008 R2 to SSIS 2016 using Attunity",
         "Implemented package deployment strategy across multiple environments",
         "Optimized SQL Server processes for improved performance",
@@ -113,8 +177,16 @@ const Experience = () => {
       company: "LA MUTUELLE FAMILIALE  - INSURANCE",
       location: "Paris, France",
       period: "09/2016 – 06/2018",
-      description: "Maintaining existing systems, optimizing data flows, and designing BI models for the accounting and actuarial departments.",
-      achievements: [
+      description: isFr
+        ? "Maintenance des systèmes existants, optimisation des flux de données et conception de modèles BI pour les départements comptabilité et actuariat."
+        : "Maintaining existing systems, optimizing data flows, and designing BI models for the accounting and actuarial departments.",
+      achievements: isFr ? [
+        "Développement et automatisation des workflows ETL et rapports stratégiques (SSIS, SSRS, Excel)",
+        "Migration du data warehouse de SQL Server 2008 R2 vers SQL Server 2016",
+        "Optimisation des performances des requêtes SQL dans l'interface utilisateur du CRM",
+        "Création de pipelines d'alimentation de données pour une application mobile",
+        "Formation des utilisateurs sur Power Pivot et l'utilisation des cubes tabulaires",
+      ] : [
         "Developed and automated ETL workflows and strategic reports (SSIS, SSRS, Excel)",
         "Migrated data warehouse from SQL Server 2008 R2 to SQL Server 2016",
         "Optimized SQL query performance in the CRM user interface",
@@ -128,8 +200,15 @@ const Experience = () => {
       company: "LIEBHERR-MINING EQUIPMENT - HEAVY MACHINERY MANUFACTURER",
       location: "Colmar, France",
       period: "01/2016 – 09/2016",
-      description: "Developed and maintained Business Intelligence solutions using MSBI stack to deliver reliable, data-driven insights.",
-      achievements: [
+      description: isFr
+        ? "Développement et maintenance de solutions Business Intelligence avec la stack MSBI pour délivrer des insights fiables et data-driven."
+        : "Developed and maintained Business Intelligence solutions using MSBI stack to deliver reliable, data-driven insights.",
+      achievements: isFr ? [
+        "Codage et déploiement de processus ETL efficaces avec SSIS 2008 R2",
+        "Développement de rapports SSRS stratégiques pour le département production",
+        "Implémentation de cubes OLAP et modèles tabulaires avec SSAS 2014",
+        "Optimisation des requêtes de base de données améliorant les performances applicatives de 3x",
+      ] : [
         "Coding and deployment of efficient ETL processes using SSIS 2008 R2",
         "Development of strategic SSRS reports for the production department",
         "Implementation of OLAP cubes and tabular models using SSAS 2014",
@@ -171,7 +250,7 @@ const Experience = () => {
                 >
                   {/* Timeline dot */}
                   <div
-                    className="absolute left-1 md:left-3 top-7 w-6 h-6 rounded-full bg-white border-2 border-primary shadow-glow flex items-center justify-center"
+                    className="absolute left-1 md:left-3 top-7 w-6 h-6 rounded-full bg-background border-2 border-primary shadow-glow flex items-center justify-center"
                     style={{
                       transform: timelineVisible ? "scale(1)" : "scale(0)",
                       transition: `transform 0.3s ease-out ${index * 0.12 + 0.1}s`,
@@ -184,7 +263,7 @@ const Experience = () => {
                     <CardContent className="p-6 md:p-8">
                       <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                         <div>
-                          <h3 className="text-lg md:text-xl font-bold text-navy mb-1 group-hover:text-primary transition-colors duration-200">
+                          <h3 className="text-lg md:text-xl font-bold text-foreground mb-1 group-hover:text-primary transition-colors duration-200">
                             {exp.title}
                           </h3>
                           <h4 className="text-base text-primary font-semibold mb-2">{exp.company}</h4>
@@ -204,7 +283,7 @@ const Experience = () => {
                       <p className="text-muted-foreground text-sm mb-5 leading-relaxed">{exp.description}</p>
 
                       <div className="mb-5">
-                        <h5 className="font-semibold text-navy text-sm mb-3">{t("experience.achievements")}</h5>
+                        <h5 className="font-semibold text-foreground text-sm mb-3">{t("experience.achievements")}</h5>
                         <ul className="space-y-1.5">
                           {exp.achievements.map((achievement, idx) => (
                             <li key={idx} className="flex items-start space-x-2">
@@ -216,7 +295,7 @@ const Experience = () => {
                       </div>
 
                       <div>
-                        <h5 className="font-semibold text-navy text-sm mb-3">{t("experience.technologies")}</h5>
+                        <h5 className="font-semibold text-foreground text-sm mb-3">{t("experience.technologies")}</h5>
                         <div className="flex flex-wrap gap-2">
                           {exp.technologies.map((tech, idx) => (
                             <Badge

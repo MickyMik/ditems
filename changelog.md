@@ -337,6 +337,170 @@ Le bloc CTA en bas de la section Work ("Interested in Collaboration? ... Start a
 
 ---
 
+## 2026-07-07 — Améliorations UX, corrections et footer
+
+### Contexte
+Audit complet du site via browser automation. Identification et correction de 9 points d'amélioration (bugs, layout, contenu, technique).
+
+### Changements
+
+**Bugs corrigés**
+- **Modifié** : `src/hooks/use-counter.tsx` — latch du trigger : le compteur animé ne redémarre plus de 0 quand l'utilisateur revient dans la section Hero. Ajout d'un état `latched` qui reste `true` une fois déclenché.
+- **Modifié** : `src/components/Header.tsx` — bouton de langue affiche désormais la **langue cible** (ex: "FR" quand on est en anglais) et non la langue courante. C'est la convention attendue et c'était la raison principale pour laquelle les utilisateurs ne trouvaient pas le bouton pour passer en français.
+- **Modifié** : `src/components/FloatingDownload.tsx` — utilise maintenant `i18n.language` (via `useTranslation`) au lieu de `navigator.language`. Le PDF téléchargé correspond désormais à la langue sélectionnée dans l'UI, et non à la langue du navigateur. Bouton "Resume/CV" traduit via `t("nav.resume")`.
+
+**Layout**
+- **Modifié** : `src/components/Work.tsx` — grille passée de `lg:grid-cols-2` à `md:grid-cols-2 lg:grid-cols-3`. Les 3 projets s'affichent maintenant en ligne complète sur desktop, sans carte orpheline.
+- **Créé** : `src/components/Footer.tsx` — nouveau footer avec copyright, liens sociaux (LinkedIn, GitHub, Email) et mention de la stack technique. Traduit FR/EN.
+- **Modifié** : `src/pages/Index.tsx` — ajout de `<Footer />` après `<Contact />`.
+
+**Contenu**
+- **Modifié** : `src/components/Hero.tsx` — ajout du nom "Michael Metinhoue" au-dessus du titre principal (clé i18n `hero.greeting` + `hero.name`).
+- **Modifié** : `src/components/About.tsx` — affichage du paragraphe `about.intro` (existait dans les fichiers de traduction mais n'était jamais rendu).
+- **Modifié** : `src/components/Experience.tsx` — correction de 2 fautes : "CAMRMIGNAC" → "CARMIGNAC", "EQUIPEMENT" → "EQUIPMENT".
+
+**Technique**
+- **Modifié** : `src/components/Contact.tsx` — regex de validation Zod pour `name` et `subject` migré vers des patterns Unicode (`\p{L}`, `\p{N}`, flag `u`). Les noms français avec accents (François, Élodie...) sont maintenant acceptés. Credentials EmailJS externalisés vers variables d'environnement (`import.meta.env.VITE_EMAILJS_*`).
+- **Créé** : `.env` — fichier de configuration local avec les credentials EmailJS (gitignored).
+- **Modifié** : `.gitignore` — ajout de `.env` (le fichier `.env` seul n'était pas couvert par la règle `*.local`).
+
+**i18n**
+- **Modifié** : `src/i18n/locales/en.json` — ajout des clés `hero.greeting`, `hero.name`, `footer.builtWith`.
+- **Modifié** : `src/i18n/locales/fr.json` — ajout des clés `hero.greeting` ("Bonjour, je suis"), `hero.name`, `footer.builtWith`.
+
+### Note déploiement
+Les variables `VITE_EMAILJS_*` doivent être ajoutées en tant que **GitHub Secrets** dans le repo pour que le build GitHub Actions les injecte. Sans cela, le formulaire de contact ne fonctionnera pas en production après le prochain déploiement.
+
+### Build
+`✓ tsc --noEmit` — 0 erreur TypeScript
+
+### Impact sur la dette technique
+- Résolu : compteur Hero qui redémarrait au scroll
+- Résolu : bouton langue trompeur (affichait la langue courante au lieu de la cible)
+- Résolu : FloatingDownload ignorait le toggle de langue
+- Résolu : grille Work asymétrique (3 cartes dans 2 colonnes)
+- Résolu : absence de footer
+- Résolu : nom absent du Hero
+- Résolu : paragraphe `about.intro` inutilisé
+- Résolu : fautes de frappe dans Experience (CARMIGNAC, EQUIPMENT)
+- Résolu : formulaire de contact rejetait les noms/sujets avec accents français
+- Résolu : credentials EmailJS hardcodés dans le source
+
+---
+
+## 2026-07-07 — Dark/light mode système + correction couleurs
+
+### Contexte
+Le site n'avait qu'un thème clair fixe. Les variables `.dark` existaient (shadcn par défaut) mais n'étaient jamais activées. Plusieurs composants utilisaient des couleurs hardcodées (`text-navy`, `bg-white`) non compatibles avec un thème sombre.
+
+### Changements
+
+**Détection système (index.html)**
+- Script synchrone inline avant le `<body>` : lit `window.matchMedia('(prefers-color-scheme: dark)')`, applique la classe `.dark` sur `<html>` immédiatement (zéro flash), et écoute les changements en temps réel
+
+**Variables dark (src/index.css)**
+- Remplacé les valeurs shadcn génériques par un thème sombre "navy" cohérent avec la palette bleue du site :
+  - Background : `230 40% 9%` (dark navy profond)
+  - Card : `230 35% 17%` (légèrement plus clair, distinct du fond)
+  - Foreground : `210 25% 93%` (blanc cassé)
+  - Primary : `207 80% 60%` (bleu légèrement plus lumineux pour le fond sombre)
+  - Border : `230 30% 28%` (visible sur fond sombre)
+  - Gradients, shadows et custom tokens (`--navy`, `--blue-light`) aussi mis à jour
+
+**Correction des couleurs hardcodées**
+- `src/components/SectionTitle.tsx` : `text-navy` → `text-foreground`
+- `src/components/About.tsx` : `text-navy` (×4) → `text-foreground` ; `bg-white` → `bg-card`
+- `src/components/Experience.tsx` : `text-navy` (×3) → `text-foreground` ; `bg-white` (dot timeline) → `bg-background`
+- `src/components/Certifications.tsx` : `text-navy` (×2) → `text-foreground` ; badges → `dark:bg-primary/20 dark:text-primary`
+- `src/components/Work.tsx` : `text-navy` (×3) → `text-foreground` ; badges → `dark:bg-primary/20 dark:text-primary`
+
+### Résultat
+- Mode clair : identique visuellement (en light, `foreground` = même valeur que l'ancien `navy`)
+- Mode sombre : thème navy profond, texte blanc, accents bleus vifs, cartes distinctes du fond
+- Changement instantané sans rechargement si l'utilisateur change son OS entre dark et light
+
+### Build
+`✓ tsc --noEmit` — 0 erreur TypeScript
+
+---
+
+## 2026-07-07 — Traduction complète FR des réalisations et descriptions (Experience)
+
+### Contexte
+Les descriptions et réalisations (bullet points) de la section Experience étaient uniquement en anglais. En mode français, le label "Réalisations clés :" était bien traduit mais le contenu dessous restait en anglais.
+
+### Changements
+- **Modifié** : `src/components/Experience.tsx` — ajout d'un flag `isFr = i18n.language.startsWith("fr")` et d'une version FR inline pour chaque champ `description` et `achievements` des 7 expériences (57 réalisations + 7 descriptions traduites). La sélection se fait à la volée : `isFr ? [...FR] : [...EN]`.
+
+### Résultat
+Le contenu bascule intégralement FR ↔ EN avec le toggle de langue, sans rechargement de page.
+
+### Build
+`✓ tsc --noEmit` — 0 erreur TypeScript
+
+---
+
+## 2026-07-07 — "Analytics Expert" → "Analytics Engineer"
+
+### Changements
+- **Modifié** : `src/i18n/locales/en.json` — `hero.subtitle` : "& Analytics Engineer"
+- **Modifié** : `src/i18n/locales/fr.json` — `hero.subtitle` : "& Ingénieur Analytique"
+- **Modifié** : `index.html` — `<title>` et `og:title` mis à jour (2 occurrences)
+
+---
+
+## 2026-07-07 — Animations Apple-style (Hero, SectionTitle, About, CursorGlow)
+
+### Contexte
+Le site était rendu dynamique via des transitions au scroll (IntersectionObserver), mais les animations manquaient de fluidité et de caractère. Objectif : atteindre le niveau qualitatif des pages produit Apple — reveal mot par mot, parallaxe souris, scrollytelling, cursor glow ambiant.
+
+### Changements
+
+**Nouveaux hooks**
+- **Créé** : `src/hooks/use-mouse.tsx` — expose la position normalisée (0–1) de la souris via `mousemove` + `passive: true`
+
+**Nouveaux composants**
+- **Créé** : `src/components/CursorGlow.tsx` — orbe ambient 700px suivant le curseur avec lerp 0.05 via `requestAnimationFrame`. Évite React state pour ne pas bloquer le rendu. `will-change: left, top` pour GPU compositing. Masqué sous `md:`.
+
+**CSS global (src/index.css)**
+- **Ajouté** : keyframe `reveal-up` — fondu + slide depuis Y+40px (éléments héro)
+- **Ajouté** : keyframe `clip-up` — slide depuis Y+110% sans opacité (masque texte, technique Apple)
+- **Ajouté** : keyframe `scale-in` — scale 0.92 → 1 + slide (cartes)
+- **Ajouté** : keyframe `glow-pulse` — pulsation radiale pour le glow ambiant
+
+**Hero.tsx — refonte complète**
+- Dot grid : `radial-gradient(circle, rgba(255,255,255,0.4) 1px, transparent 1px)` overlay 15% opacity
+- Mouse parallax : 4 blobs déplacés via `translate((mx-0.5)*fx, (my-0.5)*fy)` + transition `0.8s spring`
+- 3 cercles décoratifs en rotation lente (28s / 20s reverse / 40s) via `animate-[spin_Xs_linear_infinite]`
+- Title reveal mot par mot : outer `overflow-hidden` + inner `clip-up` staggeré 0.13s/mot
+- Stagger spring sur tous les éléments : greeting → title → subtitle → description → CTA → stats → socials → scroll indicator
+- Easing `cubic-bezier(0.16, 1, 0.3, 1)` partout (courbe spring Apple exacte)
+
+**SectionTitle.tsx — refonte complète**
+- Reveal mot par mot identique au Hero (mask `overflow-hidden` + `translateY(110% → 0)`)
+- Stagger 0.1s/mot, transition `0.75s spring`
+- Underline : `width 0% → 100%` en `0.8s spring` avec délai post-dernier-mot
+- Subtitle : fade + slide cascadé après l'underline
+
+**About.tsx — scrollytelling intro**
+- Scroll listener passive sur le paragraphe intro : calcule fraction visible dans viewport
+- Chaque mot bascule `muted-foreground → foreground` au défilement (transition `0.25s ease`)
+- Cards strengths et skills card : spring scale 0.96–0.97 → 1 à l'entrée viewport
+
+**Index.tsx**
+- **Ajouté** : `<CursorGlow />` comme premier enfant de la page
+
+### Résultat
+- Hero : séquence de reveal ~2s, parallaxe temps réel, effet cinématique
+- Sections : titres mot par mot comme apple.com
+- About : texte intro se révèle pendant la lecture
+- Curseur : orbe ambiant rend le site vivant
+
+### Build
+`✓ tsc --noEmit` — 0 erreur TypeScript
+
+---
+
 ## Format pour les entrées futures
 
 ```markdown

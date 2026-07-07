@@ -55,8 +55,10 @@ ditems-data-craft/
 │   │   ├── Contact.tsx       # Formulaire de contact (EmailJS, état succès animé)
 │   │   ├── FloatingDownload.tsx # Bouton flottant téléchargement CV
 │   │   ├── ScrollProgress.tsx# Barre de progression scroll (top, 3px)
-│   │   ├── SectionTitle.tsx  # Titre h2 animé slide-up + underline grow
+│   │   ├── SectionTitle.tsx  # Titre h2 animé mot par mot (mask clip-up) + underline grow
 │   │   ├── TiltCard.tsx      # Wrapper 3D perspective au survol
+│   │   ├── CursorGlow.tsx    # Orbe ambiant 700px suivant le curseur (rAF + lerp 0.05)
+│   │   ├── Footer.tsx        # Pied de page (copyright, liens sociaux, stack) — FR/EN
 │   │   ├── ErrorBoundary.tsx # Gestion globale des erreurs React
 │   │   └── ui/               # Primitives shadcn/ui (~50 composants)
 │   ├── hooks/
@@ -65,7 +67,8 @@ ditems-data-craft/
 │   │   ├── use-intersection.tsx # IntersectionObserver one-shot (scroll animations)
 │   │   ├── use-typewriter.tsx# Effet machine à écrire (char by char)
 │   │   ├── use-counter.tsx   # Compteur animé ease-out cubique (rAF)
-│   │   └── use-active-section.tsx # Section active au scroll (IntersectionObserver)
+│   │   ├── use-active-section.tsx # Section active au scroll (IntersectionObserver)
+│   │   └── use-mouse.tsx     # Position souris normalisée (0–1) via mousemove passive
 │   ├── i18n/
 │   │   ├── config.ts         # Configuration i18next (FR/EN auto-detect)
 │   │   └── locales/
@@ -83,7 +86,8 @@ ditems-data-craft/
 ├── changelog.md              # Historique des évolutions
 ├── tailwind.config.ts        # Configuration Tailwind + design tokens
 ├── components.json           # Configuration shadcn/ui
-├── vite.config.ts            # Configuration Vite (base: '/', optimizeDeps emailjs-com)
+├── .env                      # Credentials EmailJS locaux (gitignored)
+├── vite.config.ts            # Configuration Vite (base: '/')
 ├── tsconfig.json             # Configuration TypeScript
 ├── CNAME                     # Domaine personnalisé GitHub Pages (ditems.fr)
 ├── 404.html                  # Fallback SPA pour GitHub Pages
@@ -144,7 +148,11 @@ Basé sur shadcn/ui + Tailwind CSS. Design tokens définis dans `index.css` (var
 | `--gradient-primary` | Cards d'accroche, boutons |
 | `--shadow-card`, `--shadow-hover`, `--shadow-glow` | Élévations |
 
+**Dark mode** : Tailwind `darkMode: ["class"]`. Script synchrone dans `index.html` (avant `<body>`) lit `prefers-color-scheme` et ajoute la classe `.dark` sur `<html>` à l'hydratation — zéro flash. Écoute `change` pour mise à jour en temps réel si l'OS bascule. Variables `.dark` dans `index.css` : thème navy profond cohérent avec la palette bleue (background `230 40% 9%`, card `230 35% 17%`, primary `207 80% 60%`).
+
 Animations Tailwind personnalisées : `animate-float`, `animate-pulse-glow`, `animate-slide-up`, `animate-shimmer`, `animate-blink`, `animate-gradient-shift`, `animate-count-up`.
+
+Keyframes CSS globaux (dans `index.css`) : `reveal-up` (fade+slide Y), `clip-up` (mask text reveal, technique Apple), `scale-in` (scale 0.92→1), `glow-pulse` (pulsation radiale). Easing Apple spring : `cubic-bezier(0.16, 1, 0.3, 1)` utilisé partout.
 
 Variants de boutons custom : `hero`, `download`, `contact`.
 
@@ -261,13 +269,14 @@ commit sur dev → PR → merge dans main → push main → GitHub Actions → b
 ```
 
 ### Variables d'environnement
-Aucune variable d'environnement Vite configurée (`.env` absent).
-Clés EmailJS hardcodées dans `Contact.tsx` :
-- `SERVICE_ID = "service_t6so8r5"`
-- `TEMPLATE_ID = "template_meqf9bp"`
-- `PUBLIC_KEY = "IobH6oMwMiIETnEVh"`
+Credentials EmailJS externalisés dans `.env` (gitignored) via variables `VITE_EMAILJS_*` :
+- `VITE_EMAILJS_SERVICE_ID`
+- `VITE_EMAILJS_TEMPLATE_ID`
+- `VITE_EMAILJS_PUBLIC_KEY`
 
-> Ces clés sont publiques par conception (EmailJS client-side). Si une future API est ajoutée, les secrets doivent passer par des variables `VITE_` (publiques) ou des secrets GitHub Actions (privés).
+Lues dans `Contact.tsx` via `import.meta.env.VITE_EMAILJS_*`.
+
+> **Action requise pour la production** : ajouter ces 3 variables comme **GitHub Secrets** dans les settings du repo pour que GitHub Actions les injecte au build. Sans cela, le formulaire de contact ne fonctionne pas après déploiement.
 
 ### Sécurité
 - Validation inputs : Zod + `src/utils/security.ts`

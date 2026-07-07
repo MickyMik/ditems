@@ -2,9 +2,14 @@ import { useState, useEffect } from "react";
 
 const useCounter = (target: number, duration = 1800, trigger = false) => {
   const [count, setCount] = useState(0);
+  const [latched, setLatched] = useState(false);
 
   useEffect(() => {
-    if (!trigger) return;
+    if (trigger && !latched) setLatched(true);
+  }, [trigger, latched]);
+
+  useEffect(() => {
+    if (!latched) return;
     let frame = 0;
     const totalFrames = Math.round(duration / 16);
     const timer = setInterval(() => {
@@ -18,7 +23,7 @@ const useCounter = (target: number, duration = 1800, trigger = false) => {
       }
     }, 16);
     return () => clearInterval(timer);
-  }, [target, duration, trigger]);
+  }, [target, duration, latched]);
 
   return count;
 };

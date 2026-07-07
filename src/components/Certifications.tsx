@@ -73,7 +73,7 @@ const Certifications = () => {
                       <Award className="w-6 h-6 text-primary" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold text-navy mb-2">{cert.title}</h3>
+                      <h3 className="text-xl font-bold text-foreground mb-2">{cert.title}</h3>
                       <h4 className="text-lg text-primary font-semibold mb-2">{cert.issuer}</h4>
                       <div className="flex items-center space-x-4 text-muted-foreground mb-3">
                         <div className="flex items-center space-x-1">
@@ -102,10 +102,10 @@ const Certifications = () => {
                   )}
 
                   <div>
-                    <h5 className="font-semibold text-navy mb-3">{t("certifications.skillsValidated")}</h5>
+                    <h5 className="font-semibold text-foreground mb-3">{t("certifications.skillsValidated")}</h5>
                     <div className="flex flex-wrap gap-2">
                       {cert.skills.map((skill, idx) => (
-                        <Badge key={idx} variant="secondary" className="bg-blue-light text-navy">
+                        <Badge key={idx} variant="secondary" className="bg-blue-light text-foreground dark:bg-primary/20 dark:text-primary">
                           {skill}
                         </Badge>
                       ))}
