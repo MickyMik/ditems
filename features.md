@@ -79,7 +79,7 @@ Présentation du profil professionnel : texte biographique (i18n), jauges de com
 **Composant** : `src/components/About.tsx`
 
 **Compétences affichées**
-Azure (90%), Data Visualization (80%), DataOps (90%), Docker (90%), MS Fabrics (70%), Python (75%), SQL (95%)
+Azure (90%), Data Visualization (80%), DataOps (90%), Docker (90%), MS Fabric (70%), Python (75%), SQL (95%)
 
 **Certifications preview** (3 cards)
 - Azure Data Engineer Associate
