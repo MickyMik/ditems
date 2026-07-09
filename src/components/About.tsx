@@ -39,7 +39,7 @@ const About = () => {
     { name: "Data Visualization", level: 80, icon: BarChart3 },
     { name: "DataOps", level: 90, icon: Cpu },
     { name: "Docker", level: 90, icon: Laptop },
-    { name: "MS Fabrics", level: 70, icon: Zap },
+    { name: "MS Fabric", level: 70, icon: Zap },
     { name: "Python", level: 75, icon: Code },
     { name: "SQL", level: 95, icon: Database },
   ];

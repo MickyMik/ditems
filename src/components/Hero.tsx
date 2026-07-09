@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowDown, Mail } from "lucide-react";
+import { ArrowDown, Mail, Sparkles } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import useTypewriter from "@/hooks/use-typewriter";
 import useCounter from "@/hooks/use-counter";
@@ -73,6 +73,20 @@ const Hero = () => {
 
       <div className="container mx-auto px-4 py-20 text-center relative z-10">
         <div className="max-w-4xl mx-auto">
+
+          {/* AI-augmented badge */}
+          <div
+            className="group relative inline-flex items-center gap-2.5 mb-8 px-6 py-2.5 rounded-full overflow-hidden bg-white/10 backdrop-blur-md border border-white/25 shadow-glow animate-pulse-glow hover:scale-105 hover:border-white/50 transition-all duration-300"
+            style={stagger(0, 0, 0)}
+          >
+            {/* continuous shine sweep */}
+            <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 animate-[shimmer_2.8s_ease-in-out_infinite]" />
+
+            <Sparkles className="w-5 h-5 text-blue-light relative z-10 animate-pulse" />
+            <span className="relative z-10 text-sm md:text-base font-bold uppercase tracking-wider bg-gradient-to-r from-white via-blue-light to-white bg-[length:200%_auto] animate-gradient-shift bg-clip-text text-transparent">
+              {t("hero.badge")}
+            </span>
+          </div>
 
           {/* Greeting */}
           <p

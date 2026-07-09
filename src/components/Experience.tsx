@@ -67,7 +67,7 @@ const Experience = () => {
         "Created release pipelines using Azure DevOps",
         "Using of LLM for profil reconciliation (all-MiniLM-L6-v2)",
       ],
-      technologies: ["PYTHON", "MS FABRICS", "ADF", "SYNAPSE", "AZ DEVOPS", "AZ IA SEARCH", "AZ FOUNDRY", "AZ SQL DB", "POSTMAN"],
+      technologies: ["PYTHON", "MS FABRIC", "ADF", "SYNAPSE", "AZ DEVOPS", "AZ IA SEARCH", "AZ FOUNDRY", "AZ SQL DB", "POSTMAN"],
     },
     {
       title: "TECH LEAD DATA MSBI – AZURE DATA ENGINEER – AZURE DATAOPS",
