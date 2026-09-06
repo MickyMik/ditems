@@ -4,7 +4,7 @@ import { Download, Menu, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import useActiveSection from "@/hooks/use-active-section";
 
-const BASE_URL = "https://raw.githubusercontent.com/MickyMik/ditems-data-craft/main/resume/";
+const BASE_URL = "/resume/";
 
 const getCvUrl = (lang: string) =>
   lang.startsWith("fr") ? `${BASE_URL}CV_METINHOUE_FR.pdf` : `${BASE_URL}CV_METINHOUE_EN.pdf`;
@@ -99,7 +99,7 @@ const Header = () => {
             >
               {otherLang}
             </button>
-            <a href={cvUrl} download target="_blank" rel="noopener noreferrer">
+            <a href={cvUrl} download>
               <Button variant="download" size="sm" className="hidden md:flex">
                 <Download className="w-4 h-4" />
                 {t("nav.resume")}
@@ -130,7 +130,7 @@ const Header = () => {
                 {t(item.labelKey)}
               </button>
             ))}
-            <a href={cvUrl} download target="_blank" rel="noopener noreferrer">
+            <a href={cvUrl} download>
               <Button variant="download" size="lg">
                 <Download className="w-5 h-5" />
                 {t("nav.resume")}

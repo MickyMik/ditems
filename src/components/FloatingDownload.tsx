@@ -3,7 +3,7 @@ import { Download } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
-const BASE_URL = "https://raw.githubusercontent.com/MickyMik/ditems-data-craft/main/resume/";
+const BASE_URL = "/resume/";
 
 const FloatingDownload = () => {
   const { i18n, t } = useTranslation();
