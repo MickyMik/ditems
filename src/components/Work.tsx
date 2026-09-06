@@ -41,18 +41,18 @@ const Work = () => {
       isPublic: false
     },
     {
-      title: "Hybrid Data Platform Modernization",
-      description: "Full modernization of a legacy on-premises MSBI stack toward a hybrid Azure architecture. Includes SQL Server migrations, SSIS automation, Databricks notebooks, and DataOps CI/CD implementation.",
-      technologies: ["Azure Data Factory", "Databricks", "SQL Server", "SSIS", "Docker", "Azure DevOps", "tSQLt"],
+      title: "NYC Analytics",
+      description: "Mini end-to-end analytics project built on Microsoft Fabric, analyzing New York City data through a full pipeline from data modeling to interactive dashboarding.",
+      technologies: ["Microsoft Fabric", "Power BI", "Data Modeling", "Dataflow Gen2", "DAX"],
       features: [
-        "SQL Server 2005 → 2019 migration with Always On Failover Cluster",
-        "On-premises to Azure SQL Database migration",
-        "CI/CD DataOps across DEV / PREPROD / PROD environments",
-        "Unit testing integration with tSQLt framework"
+        "End-to-end Microsoft Fabric pipeline (ingestion to reporting)",
+        "Data modeling with a structured semantic model",
+        "Interactive Power BI dashboards for NYC data insights",
+        "DAX measures for key analytics metrics"
       ],
       demoUrl: null,
-      githubUrl: null,
-      isPublic: false
+      githubUrl: "https://github.com/MickyMik/NYC-Analytics",
+      isPublic: true
     }
   ];
 
