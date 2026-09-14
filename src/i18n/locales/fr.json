@@ -9,8 +9,6 @@
   },
   "hero": {
     "badge": "Consultant Augmenté par l'IA",
-    "greeting": "Bonjour, je suis",
-    "name": "Michael Metinhoue",
     "title": "Data Engineer",
     "subtitle": "& Ingénieur Analytique",
     "description": "Transformer la donnée brute en insights actionnables grâce à des technologies de pointe et des solutions scalables.",
