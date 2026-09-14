@@ -88,15 +88,6 @@ const Hero = () => {
             </span>
           </div>
 
-          {/* Greeting */}
-          <p
-            className="text-base md:text-lg text-blue-light/70 mb-4 tracking-widest uppercase"
-            style={stagger(0, 0.05, 0)}
-          >
-            {t("hero.greeting")}{" "}
-            <span className="text-white font-semibold normal-case">{t("hero.name")}</span>
-          </p>
-
           {/* Title — word-by-word mask reveal */}
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
             <span className="flex flex-wrap justify-center gap-x-4">
